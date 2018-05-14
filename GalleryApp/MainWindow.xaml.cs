@@ -15,12 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAnimatedGif;
 
 namespace GalleryApp
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private ObservableCollection<MyImage> images;
@@ -38,8 +36,10 @@ namespace GalleryApp
 
         private void DownloadImages()
         {
-            string imagesPath = @"\\second-dc\ПКО\SMP-171\Test";
+            //string imagesPath = @"\\second-dc\ПКО\SMP-171\Test";
             //string imagesPath = @"C:\Users\МайзельсК\Documents\Visual Studio 2017\Projects\GalleryApp\Images";
+            string imagesPath = @"C:\Users\MAIZELS\Pictures\Covers";
+            //string imagesPath = @"C:\Users\MAIZELS\Pictures\ITE";
 
             if (Directory.Exists(imagesPath))
             {
@@ -49,14 +49,19 @@ namespace GalleryApp
                 {
                     FileInfo file = new FileInfo(filePath);
 
-                    Dispatcher.Invoke(() =>
+                    if (file.Extension != ".db")
                     {
-                        images.Add(new MyImage
+                        Dispatcher.Invoke(() =>
                         {
-                            FileName = file.Name,
-                            FilePath = filePath
+                            MyImage newImage = new MyImage
+                            {
+                                FileName = file.Name,
+                                FilePath = filePath
+                            };
+
+                            images.Add(newImage);
                         });
-                    });
+                    }
                 });
 
                 Dispatcher.Invoke(() =>
@@ -64,15 +69,27 @@ namespace GalleryApp
                     Border border = (Border)VisualTreeHelper.GetChild(ImagesList, 0);
                     imagesListScroll = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
                     imagesListScroll.ScrollChanged += ImagesListScroll_ScrollChanged;
+                    imagesListScroll.CanContentScroll = false;
                 });
             }
         }
 
         private void ImagesListScroll_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            double offset = imagesListScroll.VerticalOffset;
+            double scrollActualHeigth = imagesListScroll.ActualHeight; // Текущая высота скрола
+            double VerticalOffset = imagesListScroll.VerticalOffset; // Позиция скрола по ввертикали
+            double scrollableHeight = imagesListScroll.ScrollableHeight; // Максимальная позиция скрола
+            double listActualHeight = ImagesList.ActualHeight; // Высота списка картинок
 
-            double heigth = imagesListScroll.ScrollableHeight;
+            int scrollPosPercent = (int)((VerticalOffset * 100) / scrollableHeight);
+            int itemsCount = ImagesList.Items.Count;
+            int visibleItemsCount = (int)(scrollActualHeigth / 100);
+            int imagesToDownloadPercent = itemsCount / 100;
+
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    ((MyImage)(ImagesList.Items[i])).GetImage();
+            //}
         }
     }
 }

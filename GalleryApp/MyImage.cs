@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using WpfAnimatedGif;
 
 namespace GalleryApp
 {
@@ -14,6 +16,12 @@ namespace GalleryApp
         public string FileName { get; set; }
         public string FilePath { get; set; }
         public BitmapImage Image { get; set; }
+
+        public MyImage()
+        {
+            FilePath = @"D:\Visual projects\GalleryApp\loading.gif";
+            ImageBehavior.Do
+        }
 
         public void GetImage()
         {
@@ -24,8 +32,9 @@ namespace GalleryApp
             }
         }
 
-        private void DownloadImage()
+        public void DownloadImage()
         {
+
             Image = new BitmapImage(new Uri(FilePath));
         }
     }
