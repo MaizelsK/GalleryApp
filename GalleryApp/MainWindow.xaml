@@ -12,8 +12,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Border BorderThickness="1" BorderBrush="Black" Background="AliceBlue" Width="150" Height="100">
-                            <Image Source="{Binding Image, IsAsync=True}" Width="150" Height="100"/>
+                        <Border BorderThickness="1" BorderBrush="Black" Background="AliceBlue" Width="100" Height="100">
+                            <Image Width="150" Height="100" gif:ImageBehavior.AnimatedSource="{Binding Path=Source}"/>
                         </Border>
                         <TextBlock Text="{Binding FileName, IsAsync=True}" Margin="10"/>
                     </StackPanel>

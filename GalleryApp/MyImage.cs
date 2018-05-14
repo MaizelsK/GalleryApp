@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,17 +16,17 @@ namespace GalleryApp
     {
         public string FileName { get; set; }
         public string FilePath { get; set; }
-        public BitmapImage Image { get; set; }
+        public Uri Source { get; set; }
 
         public MyImage()
         {
-            FilePath = @"D:\Visual projects\GalleryApp\loading.gif";
-            ImageBehavior.Do
+            //Source = new Uri(@"D:\Visual projects\GalleryApp\loading.gif");
+            Source = new Uri(Directory.GetCurrentDirectory() + "\\loading4.gif");
         }
 
         public void GetImage()
         {
-            if (Image == null)
+            if (Source == null)
             {
                 Thread thread = new Thread(new ThreadStart(DownloadImage));
                 thread.Start();
@@ -34,8 +35,7 @@ namespace GalleryApp
 
         public void DownloadImage()
         {
-
-            Image = new BitmapImage(new Uri(FilePath));
+            Source = new Uri(FilePath);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace GalleryApp
     {
         private ObservableCollection<MyImage> images;
         private ScrollViewer imagesListScroll;
+
         public MainWindow()
         {
             images = new ObservableCollection<MyImage>();
@@ -36,9 +37,9 @@ namespace GalleryApp
 
         private void DownloadImages()
         {
-            //string imagesPath = @"\\second-dc\ПКО\SMP-171\Test";
+            string imagesPath = @"\\second-dc\ПКО\SMP-171\Test";
             //string imagesPath = @"C:\Users\МайзельсК\Documents\Visual Studio 2017\Projects\GalleryApp\Images";
-            string imagesPath = @"C:\Users\MAIZELS\Pictures\Covers";
+            //string imagesPath = @"C:\Users\MAIZELS\Pictures\Covers";
             //string imagesPath = @"C:\Users\MAIZELS\Pictures\ITE";
 
             if (Directory.Exists(imagesPath))
